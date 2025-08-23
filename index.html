@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSSFilterTool</title>
+    <style>
+        html,
+        body {
+            width: 100dvw;
+            height: 100dvh;
+            margin: 0;
+            padding: 0;
+        }
+
+        #MenuContainer {
+            padding: 1rem;
+            box-sizing: border-box;
+        }
+        #MenuContainer button {
+            border: none;
+            background-color: #1c1c1e;
+            color: #ffffff;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            margin: 0.5rem 0;
+        }
+        #MenuContainer button.selected {
+            background-color: #007aff;
+        }
+        #MenuContainer input {
+            border: 1px solid #1c1c1e;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+        }
+
+        #MainWorkspace {
+            display: flex;
+            width: 100%;
+        }
+
+        #MainWorkspace>div {
+            width: 50%;
+        }
+
+        #MainWorkspace #FilterPreviewImage {
+            width: 100%;
+            height: 100%;
+            max-height: 90dvh;
+            object-fit: cover;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div id="MenuContainer">
+        <button id="ExportButton">Export CSS</button>
+        <div id="FilterListView">
+            <button id="blur">Blur</button>
+            <button id="brightness">Brightness</button>
+            <button id="contrast">Contrast</button>
+            <button id="drop-shadow">Drop Shadow</button>
+            <button id="grayscale">Grayscale</button>
+            <button id="hue-rotate">Hue Rotate</button>
+            <button id="invert">Invert</button>
+            <button id="opacity">Opacity</button>
+            <button id="saturate">Saturate</button>
+            <button id="sepia">Sepia</button>
+        </div>
+        <div id="FilterValueInputContainer">
+            <!-- slider and input field-->
+            <input type="text" id="FilterValueInput" value="0">
+        </div>
+    </div>
+    <div id="MainWorkspace">
+        <div id="FilterPreviewTextContainer">
+            <h1>Filter Preview</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et
+                dolore magna aliqua.</p>
+            <p>동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라 만세</p>
+        </div>
+        <div id="FilterPreviewImageContainer">
+            <img id="FilterPreviewImage" src="./PreviewImage.webp">
+        </div>
+    </div>
+    <script>
+        // JavaScript code to handle filter application and export
+        const filterList = [];
+        const filterValues = {};
+        let currentFilter = null;
+
+        const filterPreviewText = document.getElementById('FilterPreviewTextContainer');
+        const filterPreviewImage = document.getElementById('FilterPreviewImage');
+        const filterValueInput = document.getElementById('FilterValueInput');
+        const exportButton = document.getElementById('ExportButton');
+
+        function getFilterString() {
+            return String(Object.entries(filterValues)
+                .map(([filter, value]) => `${filter}(${value})`)
+                .join(' '));
+        }
+        function updateFilters() {
+            console.log('Updating filters:', filterValues);
+            console.log(getFilterString());
+            filterPreviewText.style.filter = getFilterString();
+            filterPreviewImage.style.filter = getFilterString();
+        }
+        
+        function updateFilterValue() {
+            if (currentFilter) {
+                console.log(`Updating ${currentFilter} to ${filterValueInput.value}`);
+                const value = filterValueInput.value;
+                filterValues[currentFilter] = value;
+                updateFilters();
+            }
+        }
+
+        document.getElementById('FilterListView').addEventListener('click', (e) => {
+            if (e.target.tagName === 'BUTTON') {
+                if (currentFilter) document.getElementById(currentFilter).classList.remove('selected');
+                e.target.classList.add('selected');
+                currentFilter = e.target.id;
+                filterValueInput.value = filterValues[currentFilter] || 0;
+                console.log(`Selected filter: ${currentFilter}`);
+            }
+        });
+
+        filterValueInput.addEventListener('input', () => {
+            updateFilterValue();
+        });
+    </script>
+</body>
+
+</html>
