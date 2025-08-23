@@ -13,7 +13,10 @@
             margin: 0;
             padding: 0;
         }
-
+        h1, h2, h3, h4, h5, h6, p {
+            margin: 0;
+            padding: 0;
+        }
         #MenuContainer {
             padding: 1rem;
             box-sizing: border-box;
@@ -34,10 +37,14 @@
             padding: 0.5rem 1rem;
             border-radius: 5px;
         }
-
+        #FilterDescriptionContainer {
+            margin-bottom: 1rem;
+        }
         #MainWorkspace {
             display: flex;
             width: 100%;
+            padding: 1rem;
+            box-sizing: border-box;
         }
 
         #MainWorkspace>div {
@@ -50,7 +57,10 @@
             max-height: 90dvh;
             object-fit: cover;
         }
-
+        a {
+            color: blue;
+            text-decoration: none;
+        }
     </style>
 </head>
 
@@ -69,9 +79,12 @@
             <button id="saturate">Saturate</button>
             <button id="sepia">Sepia</button>
         </div>
+        <div id="FilterDescriptionContainer">
+            <h2 id="FilterName">Select a Filter</h2>
+            <p id="FilterDescription">Description of the selected filter will appear here. You can change the filter value using the input below and see the changes in real-time.</p>
+        </div>
         <div id="FilterValueInputContainer">
-            <!-- slider and input field-->
-            <input type="text" id="FilterValueInput" value="0">
+            <input type="text" id="FilterValueInput" value="">
         </div>
     </div>
     <div id="MainWorkspace">
@@ -79,7 +92,15 @@
             <h1>Filter Preview</h1>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et
                 dolore magna aliqua.</p>
-            <p>동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라 만세</p>
+            <p style="color: red;">동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라 만세</p>
+            <p style="color: green;">초록빛 고래수염과 높이뛰는 황새다리건널목 신호등 아래 솜사탕우주맛집</p>
+            <p style="color: blue;"><a href="https://jsna.dev">Hello, Js Na! - Made by Js Na with ❤️</a></p>
+            <p style="color: cyan;">The quick brown fox jumps over the lazy dog.</p>
+            <p style="color: magenta;">Who wants a stylus? You have to get 'em and put 'em away, and you lose 'em. Yuck. Nobody wants a stylus.</p>
+            <p style="color: yellow;">이번 역은 4호선, 경의·중앙선, 공항철도, GTX-A 열차로 갈아타실 수 있는 서울역, 서울역입니다. 내리실 문은 오른입니다.</p>
+            <p style="color: brown;">本日も阪急電車をご利用いただきまして、ありがとうございます。大阪梅田、大阪梅田、終点です。</p>
+            <p style="color: teal;">Thank you for riding with us! This train is bound for Yumeshima. </p>
+
         </div>
         <div id="FilterPreviewImageContainer">
             <img id="FilterPreviewImage" src="./PreviewImage.webp">
@@ -89,8 +110,34 @@
         // JavaScript code to handle filter application and export
         const filterList = [];
         const filterValues = {};
+        const FilterDescription = {
+            "blur": "blur(px) Applies a Gaussian blur. Can be adjusted with a pixel value.",
+            "brightness": "brightness(%) Adjusts the brightness of the element. 100% is normal. Values greater than 100% make it brighter, while values less than 100% make it darker.",
+            "contrast": "contrast(%) Adjusts the contrast of the element. 100% is normal. Values greater than 100% increase contrast, while values less than 100% decrease contrast.",
+            "drop-shadow": "drop-shadow(offsetX offsetY blurRadius color) Applies a drop shadow effect. Requires offsetX, offsetY, blurRadius, and color values.",
+            "grayscale": "grayscale(%) Converts the element to grayscale. 0% is fully colored, while 100% is completely grayscale. Negative values are not allowed.",
+            "hue-rotate": "hue-rotate(deg) Applies a hue rotation to the element. The angle is specified in degrees. 0deg is default(original color), 360deg is maximum.",
+            "invert": "invert(%) Inverts the colors of the element. 0% is normal, while 100% is completely inverted. Negative values are not allowed.",
+            "opacity": "opacity(%) Adjusts the opacity of the element. 100% is fully opaque, while 0% is fully transparent. Values greater than 100% or negative are not allowed.",
+            "saturate": "saturate(%) Adjusts the saturation of the element. 100% is normal, values greater than 100% increase saturation, and values less than 100% decrease saturation. Negative values are not allowed.",
+            "sepia": "sepia(%) Applies a sepia filter to the element. 0% is normal, while 100% is completely sepia. Negative values are not allowed."
+        }
+        const FilterDefaults = {
+            "blur": "0px",
+            "brightness": "100%",
+            "contrast": "100%",
+            "drop-shadow": "0 0 0 transparent",
+            "grayscale": "0%",
+            "hue-rotate": "0deg",
+            "invert": "0%",
+            "opacity": "100%",
+            "saturate": "100%",
+            "sepia": "0%"
+        }
         let currentFilter = null;
 
+        const filterDescriptionName = document.getElementById('FilterName');
+        const filterDescriptionText = document.getElementById('FilterDescription');
         const filterPreviewText = document.getElementById('FilterPreviewTextContainer');
         const filterPreviewImage = document.getElementById('FilterPreviewImage');
         const filterValueInput = document.getElementById('FilterValueInput');
@@ -112,7 +159,7 @@
             if (currentFilter) {
                 console.log(`Updating ${currentFilter} to ${filterValueInput.value}`);
                 const value = filterValueInput.value;
-                filterValues[currentFilter] = value;
+                filterValues[currentFilter] = value || FilterDefaults[currentFilter];
                 updateFilters();
             }
         }
@@ -122,7 +169,9 @@
                 if (currentFilter) document.getElementById(currentFilter).classList.remove('selected');
                 e.target.classList.add('selected');
                 currentFilter = e.target.id;
-                filterValueInput.value = filterValues[currentFilter] || 0;
+                filterValueInput.value = filterValues[currentFilter] || FilterDefaults[currentFilter];
+                filterDescriptionName.textContent = currentFilter;
+                filterDescriptionText.textContent = FilterDescription[currentFilter];
                 console.log(`Selected filter: ${currentFilter}`);
             }
         });
