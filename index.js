@@ -114,7 +114,7 @@ document.getElementById('FilterListView').addEventListener('click', (e) => {
         if (currentFilter) document.getElementById(currentFilter).classList.remove('selected');
         e.target.classList.add('selected');
         currentFilter = e.target.id;
-        const firstTarget = getTargetElements()?.id;
+        const firstTarget = getTargetElements()[0].id;
         if (backdropFilterMode) {
             filterValueInput.value =
                 (backdropFilterValues[firstTarget]?.[currentFilter]) || FilterDefaults[currentFilter];
