@@ -41,6 +41,7 @@ let selectedTargets = ['FilterPreviewTextContainer', 'FilterPreviewImageContaine
 
 function clearFilterSelection() {
     filterValueInput.value = '';
+    filterValueInput.disabled = true;
     if (currentFilter) {
         const selectedBtn = document.getElementById(currentFilter);
         if (selectedBtn) selectedBtn.classList.remove('selected');
@@ -124,6 +125,7 @@ document.getElementById('FilterListView').addEventListener('click', (e) => {
         filterDescriptionName.textContent = currentFilter;
         filterDescriptionText.textContent = FilterDescription[currentFilter];
         console.log(`Selected filter: ${currentFilter}`);
+        filterValueInput.disabled = false;
     }
 });
 
