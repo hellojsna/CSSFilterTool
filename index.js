@@ -138,3 +138,28 @@ filterTargetCheckboxes.forEach(checkbox => {
 filterModeRadioButtons.forEach(radio => {
     radio.addEventListener('change', changeFilterMode);
 });
+
+// Overlay Drag Handler
+const FilterPreviewOverlayContainer = document.getElementById('FilterPreviewOverlayContainer');
+const FilterPreviewOverlay = document.getElementById('FilterPreviewOverlay');
+function OverlayDragHandler(e) {
+    e.preventDefault();
+    const rect = FilterPreviewOverlay.getBoundingClientRect();
+    let newX = e.clientX - rect.width / 2;
+    let newY = e.clientY - rect.height / 2;
+
+    const containerRect = FilterPreviewOverlayContainer.getBoundingClientRect();
+    newX = Math.max(containerRect.left, Math.min(newX, containerRect.right - rect.width));
+    newY = Math.max(containerRect.top, Math.min(newY, containerRect.bottom - rect.height));
+
+    FilterPreviewOverlay.style.left = `${newX - containerRect.left}px`;
+    FilterPreviewOverlay.style.top = `${newY - containerRect.top}px`;
+}
+
+FilterPreviewOverlay.addEventListener(window.PointerEvent ? 'pointerdown' : 'mousedown', (e) => {
+    e.preventDefault();
+    document.addEventListener(window.PointerEvent ? 'pointermove' : 'mousemove', OverlayDragHandler);
+    document.addEventListener(window.PointerEvent ? 'pointerup' : 'mouseup', () => {
+        document.removeEventListener(window.PointerEvent ? 'pointermove' : 'mousemove', OverlayDragHandler);
+    });
+})

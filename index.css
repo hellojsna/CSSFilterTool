@@ -104,4 +104,9 @@
             max-width: 90%;
             max-height: 90%;
             overflow: auto;
+            position: absolute;
+            z-index: 56789;
+            pointer-events: all;
+            left: 0;
+            top: 20%;
         }
