@@ -158,10 +158,17 @@ function OverlayDragHandler(e) {
     FilterPreviewOverlay.style.top = `${newY - containerRect.top}px`;
 }
 
-FilterPreviewOverlay.addEventListener(window.PointerEvent ? 'pointerdown' : 'mousedown', (e) => {
+var controlType = "mouse";
+if (window.PointerEvent) {
+    controlType = "pointer";
+} else if ("ontouchstart" in window || navigator.maxTouchPoints > 0) {
+    controlType = "touch";
+}
+console.log(`Hello, ${controlType} user.`)
+FilterPreviewOverlay.addEventListener(`${controlType}down`, (e) => {
     e.preventDefault();
-    document.addEventListener(window.PointerEvent ? 'pointermove' : 'mousemove', OverlayDragHandler);
-    document.addEventListener(window.PointerEvent ? 'pointerup' : 'mouseup', () => {
-        document.removeEventListener(window.PointerEvent ? 'pointermove' : 'mousemove', OverlayDragHandler);
+    document.addEventListener(`${controlType}move`, OverlayDragHandler);
+    document.addEventListener(`${controlType}up`, () => {
+        document.removeEventListener(`${controlType}move`, OverlayDragHandler);
     });
 })

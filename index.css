@@ -131,6 +131,11 @@ a {
     z-index: 56789;
     pointer-events: all;
     touch-action: none;
+    cursor: grab;
     left: 0;
     top: 20%;
+}
+
+#MainWorkspace #FilterPreviewOverlay:active {
+    cursor: grabbing;
 }
