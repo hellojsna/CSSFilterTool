@@ -67,7 +67,28 @@ p {
     box-sizing: border-box;
     border-radius: 5px;
     overflow: hidden;
+    position: relative;
 }
+#AppliedFilterContainer>span>span::before {
+    content: "";
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.1s ease-in-out;
+}
+#AppliedFilterContainer>span>span.copied::before {
+    content: "Copied to clipboard.";
+    opacity: 1;
+    backdrop-filter: blur(10px);
+    background-color: #0088ff22;
+}
+
 #AppliedFilterContainer>span>span>div{
     width: 100%;
     height: 100%;
@@ -138,8 +159,8 @@ a {
     pointer-events: all;
     touch-action: none;
     cursor: grab;
-    left: 0;
-    top: 20%;
+    left: 10%;
+    top: 10%;
 }
 
 #MainWorkspace #FilterPreviewOverlay:active {

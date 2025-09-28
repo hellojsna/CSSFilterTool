@@ -91,7 +91,6 @@ function updateFilters() {
     });
 }
 
-
 function updateFilterValue() {
     if (!currentFilter) return;
     const value = filterValueInput.value || FilterDefaults[currentFilter];
@@ -172,3 +171,33 @@ FilterPreviewOverlay.addEventListener(`${controlType}down`, (e) => {
         document.removeEventListener(`${controlType}move`, OverlayDragHandler);
     });
 })
+
+function addCopyListeners() {
+    const AppliedFilterElements = document.getElementById('AppliedFilterList').getElementsByTagName('span');
+    const AppliedBackdropFilterElements = document.getElementById('AppliedBackdropFilterList').getElementsByTagName('span');
+    Array.from(AppliedFilterElements).forEach(span => {
+        span.addEventListener('click', () => {
+            console.log("Copy Filter");
+            const text = span.getElementsByTagName('div')[0].textContent;
+            if (!text) return;
+            span.classList.add('copied');
+            setTimeout(() => {
+                span.classList.remove('copied');
+            }, 10000);
+            navigator.clipboard.writeText(`filter: ${text};`);
+        })
+    });
+    Array.from(AppliedBackdropFilterElements).forEach(span => {
+        span.addEventListener('click', () => {
+            console.log("Copy Backdrop Filter");
+            const text = span.getElementsByTagName('div')[0].textContent;
+            if (!text) return;
+            span.classList.add('copied');
+            setTimeout(() => {
+                span.classList.remove('copied');
+            }, 10000);
+            navigator.clipboard.writeText(`backdrop-filter: ${text};`);
+        })
+    });
+}
+addCopyListeners();
