@@ -62,7 +62,9 @@
             <button id="sepia">Sepia</button>
         </div>
         <div id="FilterValueInputContainer">
+            <button id="FeelingLuckyButton">Feeling Lucky</button>
             <span>
+                Apply to:
                 <input type="checkbox" id="FilterTargetText" name="FilterTarget" value="FilterPreviewTextContainer"
                     checked><label for="FilterTargetText">Text</label>
                 <input type="checkbox" id="FilterTargetImage" name="FilterTarget" value="FilterPreviewImageContainer"
@@ -76,6 +78,7 @@
                     for="FilterModeBackdrop">backdrop-filter</label>
             </span>
             <span>
+                Value:
                 <input type="text" id="FilterValueInput" value="" placeholder="Filter Value" disabled>
                 <button id="FilterResetButton">Reset</button>
             </span>
@@ -84,7 +87,7 @@
             <h2 id="FilterName">Select a Filter</h2>
             <p id="FilterDescription">Description of the selected filter will appear here. You can change the filter
                 value using the input below and see the changes in real-time.</p>
-            <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/filter-function">Check MDN for more info.</a>
+            <a id="MDNLink" href="https://developer.mozilla.org/en-US/docs/Web/CSS/filter-function" target="_blank">Check MDN for more info.</a>
         </div>
     </div>
     <div id="MainWorkspace">

@@ -49,6 +49,7 @@ function clearFilterSelection() {
     currentFilter = null;
     filterDescriptionName.textContent = 'Select a Filter';
     filterDescriptionText.textContent = 'Description of the selected filter will appear here. You can change the filter value using the input below and see the changes in real-time.';
+    document.getElementById('MDNLink').href = `https://developer.mozilla.org/en-US/docs/Web/CSS/filter-function`;
 }
 
 function changeTarget() {
@@ -125,6 +126,7 @@ document.getElementById('FilterListView').addEventListener('click', (e) => {
         filterDescriptionText.textContent = FilterDescription[currentFilter];
         console.log(`Selected filter: ${currentFilter}`);
         filterValueInput.disabled = false;
+        document.getElementById('MDNLink').href = `https://developer.mozilla.org/en-US/docs/Web/CSS/filter-function${currentFilter ? `/${currentFilter}` : ''}`;
     }
 });
 
@@ -171,6 +173,33 @@ FilterPreviewOverlay.addEventListener(`${controlType}down`, (e) => {
         document.removeEventListener(`${controlType}move`, OverlayDragHandler);
     });
 })
+
+function FeelingLucky() {
+    const filters = Object.keys(FilterDefaults);
+    const randomFilter = filters[Math.floor(Math.random() * filters.length)];
+    let randomValue = Math.floor(Math.random() * 101) + (randomFilter === 'blur' ? 'px' : randomFilter === 'hue-rotate' ? 'deg' : '%');
+    if (randomFilter == 'drop-shadow') {
+        const offX = Math.floor(Math.random() * 21) - 10; // -10 to 10
+        const offY = Math.floor(Math.random() * 21) - 10; // -10 to 10
+        const blur = Math.floor(Math.random() * 11); // 0 to 10
+        const r = Math.floor(Math.random() * 256);
+        const g = Math.floor(Math.random() * 256);
+        const b = Math.floor(Math.random() * 256);
+        const a = Math.floor(Math.random() * 101) / 100; // 0 to 1
+        randomValue = `${offX}px ${offY}px ${blur}px rgba(${r}, ${g}, ${b}, ${a})`
+    }
+    if (currentFilter) document.getElementById(currentFilter).classList.remove('selected');
+    const randomBtn = document.getElementById(randomFilter);
+    randomBtn.classList.add('selected');
+    currentFilter = randomFilter;
+    filterDescriptionName.textContent = currentFilter;
+    filterDescriptionText.textContent = FilterDescription[currentFilter];
+    filterValueInput.value = randomValue;
+    filterValueInput.disabled = false;
+    updateFilterValue();
+    console.log(`Feeling Lucky! Selected filter: ${currentFilter} with value: ${randomValue}`);
+}
+document.getElementById('FeelingLuckyButton').addEventListener('click', FeelingLucky);
 
 function addCopyListeners() {
     const AppliedFilterElements = document.getElementById('AppliedFilterList').getElementsByTagName('span');
