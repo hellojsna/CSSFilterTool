@@ -201,3 +201,36 @@ function addCopyListeners() {
     });
 }
 addCopyListeners();
+
+const filterResetButton = document.getElementById('FilterResetButton');
+filterResetButton.addEventListener('click', () => {
+    if (!confirm(`Are you sure you want to reset ${backdropFilterMode ? 'backdrop-filter' : 'filter'} values of selected elements?`)) {
+        return;
+    }
+    if (selectedTargets.length == 0) {
+        if (!confirm('No element is selected. Would you like to reset all filter and backdrop-filter values on all elements?')) {
+            return;
+        }
+        if (backdropFilterMode) {
+            Object.keys(backdropFilterValues).forEach(target => {
+                delete backdropFilterValues[target];
+            });
+        } else {
+            Object.keys(filterValues).forEach(target => {
+                delete filterValues[target];
+            });
+        }
+    } else {
+        getTargetElements().forEach(element => {
+            const id = element.id;
+            if (backdropFilterMode) {
+                delete backdropFilterValues[id];
+            } else {
+                delete filterValues[id];
+            }
+        });
+    }
+    clearFilterSelection();
+    updateFilters();
+    console.log(`Filters reset. filter: ${JSON.stringify(filterValues)}, backdrop-filter: ${JSON.stringify(backdropFilterValues)}`);
+});
