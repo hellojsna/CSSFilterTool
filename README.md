@@ -6,7 +6,7 @@ Users can apply various CSS filter and backdrop-filter values to various HTML el
 
 ## Features
 
-- WYSIWYG editor for CSS filters.
+- WYSIWYG style playground for CSS filters.
 - Various elements to apply filters to, including images, texts, and overlay elements.
 - Ability to copy the generated CSS just by clicking.
 

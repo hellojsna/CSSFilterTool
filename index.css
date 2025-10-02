@@ -188,3 +188,37 @@ a {
 #MainWorkspace #FilterPreviewOverlay:active {
     cursor: grabbing;
 }
+
+#HTMLEdit {
+    position: fixed;
+    display: none;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    left: 0;
+    top: 0;
+    z-index: 99999;
+    background: #f2f2f7;
+}
+#HTMLEdit textarea {
+    width: 80%;
+    height: 70%;
+    box-sizing: border-box;
+    font-family: monospace;
+    font-size: 1rem;
+    padding: 1rem;
+    border: 1px solid #8e8e93;
+    border-radius: 5px;
+    resize: none;
+}
+#HTMLEdit button {
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    border: none;
+    background-color: #1c1c1e;
+    color: #ffffff;
+    border-radius: 5px;
+    cursor: pointer;
+}

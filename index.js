@@ -231,6 +231,36 @@ function addCopyListeners() {
 }
 addCopyListeners();
 
+function addRightClickListeners() {
+    // Right click on preview elements to edit HTML.
+    const HTMLEdit = document.getElementById('HTMLEdit');
+    const HTMLEditTextarea = document.getElementById('HTMLEditTextarea');
+    const HTMLEditCloseButton = document.getElementById('HTMLEditCloseButton');
+    const HTMLEditSaveButton = document.getElementById('HTMLEditSaveButton');
+    var closeButtonEventListener, saveButtonEventListener;
+    var targetElement
+    [filterPreviewText, filterPreviewImage, FilterPreviewOverlay].forEach(element => {
+        element.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+            HTMLEditTextarea.value = element.outerHTML;
+            HTMLEdit.style.display = 'flex';
+            targetElement = element;
+        });
+    });
+    HTMLEditCloseButton.addEventListener('click', () => {
+        HTMLEdit.style.display = 'none';
+    });
+    HTMLEditSaveButton.addEventListener('click', () => {
+        if (HTMLEditTextarea.value.trim() === '') {
+            alert('HTML cannot be empty.');
+            return;
+        }
+        HTMLEdit.style.display = 'none';
+        targetElement.outerHTML = HTMLEditTextarea.value;
+    });
+}
+addRightClickListeners();
+
 const filterResetButton = document.getElementById('FilterResetButton');
 filterResetButton.addEventListener('click', () => {
     if (!confirm(`Are you sure you want to reset ${backdropFilterMode ? 'backdrop-filter' : 'filter'} values of selected elements?`)) {
