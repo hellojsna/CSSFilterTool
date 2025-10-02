@@ -1,3 +1,6 @@
+* {
+    font-family: 'Pretendard GOV', sans-serif;
+}
 html,
 body {
     width: 100dvw;
@@ -214,6 +217,38 @@ a {
     resize: none;
 }
 #HTMLEdit button {
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    border: none;
+    background-color: #1c1c1e;
+    color: #ffffff;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#WelcomeGuide {
+    position: fixed;
+    display: none;
+    min-width: 20em;
+    max-width: 70vw;
+    min-height: 5em;
+    max-height: 30vh;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    left: 0;
+    top: 0;
+    z-index: 99998;
+    background: #f2f2f7;
+    border: 1px solid #8e8e93;
+    padding: 1rem;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+#WelcomeGuide span {
+    text-align: center;
+}
+#WelcomeGuide button {
     margin-top: 1rem;
     padding: 0.5rem 1rem;
     border: none;

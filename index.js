@@ -240,11 +240,22 @@ function addRightClickListeners() {
     var closeButtonEventListener, saveButtonEventListener;
     var targetElement
     [filterPreviewText, filterPreviewImage, FilterPreviewOverlay].forEach(element => {
-        element.addEventListener('contextmenu', (e) => {
+        element.addEventListener('contextmenu', (e) => { // Right click
             e.preventDefault();
             HTMLEditTextarea.value = element.outerHTML;
             HTMLEdit.style.display = 'flex';
             targetElement = element;
+        });
+        let pressTimer;
+        element.addEventListener('touchstart', (e) => { // Touch long press
+            pressTimer = setTimeout(() => {
+                HTMLEditTextarea.value = element.outerHTML;
+                HTMLEdit.style.display = 'flex';
+                targetElement = element;
+            }, 800);
+        });
+        element.addEventListener('touchend', (e) => {
+            clearTimeout(pressTimer);
         });
     });
     HTMLEditCloseButton.addEventListener('click', () => {
@@ -292,4 +303,59 @@ filterResetButton.addEventListener('click', () => {
     clearFilterSelection();
     updateFilters();
     console.log(`Filters reset. filter: ${JSON.stringify(filterValues)}, backdrop-filter: ${JSON.stringify(backdropFilterValues)}`);
+});
+
+function showWelcomeGuide() {
+    const welcomeGuide = document.getElementById('WelcomeGuide');
+    var step = 0;
+    const steps = [
+       {"targetId": "", "text": "Welcome to the CSSFilterTool! I'll guide you through the main features of this playground."},
+       {"targetId": "FilterTargetApplyTo", "text": "First, select the elements you want to apply filters to using these checkboxes."},
+       {"targetId": "FilterTargetMode", "text": "Next, choose whether you want to apply 'filter' or 'backdrop-filter' using these radio buttons."},
+       {"targetId": "FilterListView", "text": "Next, click a filter from this list of buttons to see its description and apply it to the selected elements."},
+       {"targetId": "FilterTargetValue", "text": "Next, You can change the filter value using this text input. The changes will be applied to target elements in real-time."},
+       {"targetId": "AppliedFilterList", "text": "You can see the currently applied filters and click to copy the CSS code to your clipboard."},
+       {"targetId": "FilterPreviewOverlay", "text": "You can edit the previews' HTML by right-clicking (or long-pressing on touch devices) on the preview elements."},
+       {"targetId": "", "text": "That's it for the tour! I hope you enjoy playing with filters."}
+    ];
+    function updateGuide() {
+        const currentStep = steps[step];
+        const targetElement = currentStep.targetId ? document.getElementById(currentStep.targetId) : null;
+        const welcomeGuideText = document.getElementById('WelcomeGuideText');
+        const welcomeGuideButton = document.getElementById('WelcomeGuideButton');
+        welcomeGuideText.textContent = currentStep.text;
+        if (targetElement) {
+            const rect = targetElement.getBoundingClientRect();
+            // position the box to the bottom of the target element
+            welcomeGuide.style.left = `${rect.left + window.scrollX}px`;
+            welcomeGuide.style.top = `${rect.bottom + window.scrollY + 10}px`;
+            welcomeGuide.style.transform = 'translate(0, 0)';
+            welcomeGuide.style.display = 'flex';
+        } else {
+            welcomeGuide.style.left = `50%`;
+            welcomeGuide.style.top = `50%`;
+            welcomeGuide.style.transform = 'translate(-50%, -50%)';
+            welcomeGuide.style.display = 'flex';
+        }
+        if (step === steps.length - 1) {
+            welcomeGuideButton.textContent = 'Finish';
+        } else {
+            welcomeGuideButton.textContent = 'Next';
+        }
+    }
+    document.getElementById('WelcomeGuideButton').addEventListener('click', () => {
+        step += 1;
+        if (step >= steps.length) {
+            welcomeGuide.style.display = 'none';
+        } else {
+            updateGuide();
+        }
+    });
+    document.getElementById('WelcomeCloseButton').addEventListener('click', () => {
+        welcomeGuide.style.display = 'none';
+    });
+    updateGuide();
+}
+window.addEventListener('load', () => {
+    showWelcomeGuide();
 });

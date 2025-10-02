@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CSSFilterTool</title>
     <style>
+        @import url('./PretendardGOV/pretendard-gov-subset.css');
         @import url('./index.css');
     </style>
 </head>
@@ -63,7 +64,7 @@
         </div>
         <div id="FilterValueInputContainer">
             <button id="FeelingLuckyButton">Feeling Lucky</button>
-            <span>
+            <span id="FilterTargetApplyTo">
                 Apply to:
                 <input type="checkbox" id="FilterTargetText" name="FilterTarget" value="FilterPreviewTextContainer"
                     checked><label for="FilterTargetText">Text</label>
@@ -72,12 +73,12 @@
                 <input type="checkbox" id="FilterTargetOverlay" name="FilterTarget" value="FilterPreviewOverlay"><label
                     for="FilterTargetOverlay">Overlay</label>
             </span>
-            <span>
+            <span id="FilterTargetMode">
                 <input type="radio" id="FilterMode" name="FilterMode" checked><label for="FilterMode">filter</label>
                 <input type="radio" id="FilterModeBackdrop" name="FilterMode"><label
                     for="FilterModeBackdrop">backdrop-filter</label>
             </span>
-            <span>
+            <span id="FilterTargetValue">
                 Value:
                 <input type="text" id="FilterValueInput" value="" placeholder="Filter Value" disabled>
                 <button id="FilterResetButton">Reset</button>
@@ -87,10 +88,11 @@
             <h2 id="FilterName">Select a Filter</h2>
             <p id="FilterDescription">Description of the selected filter will appear here. You can change the filter
                 value using the input below and see the changes in real-time.</p>
-            <a id="MDNLink" href="https://developer.mozilla.org/en-US/docs/Web/CSS/filter-function" target="_blank">Check MDN for more info.</a>
+            <a id="MDNLink" href="https://developer.mozilla.org/en-US/docs/Web/CSS/filter-function"
+                target="_blank">Check MDN for more info.</a>
         </div>
     </div>
-    
+
     <div id="MainWorkspace">
         <div id="FilterPreviewTextContainer">
             <h1>Filter Preview</h1>
@@ -99,6 +101,7 @@
             <p style="color: red;">동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라 만세</p>
             <p style="color: green;">초록빛 고래수염과 높이뛰는 황새다리건널목 신호등 아래 솜사탕우주맛집</p>
             <p style="color: blue;"><a href="https://jsna.dev">Hello, Js Na! - Made by Js Na with ❤️</a></p>
+            <p style="color: blue;"><a href="https://github.com/orioncactus/pretendard">Pretendard GOV</a> is used.</p>
             <p style="color: cyan;">The quick brown fox jumps over the lazy dog.</p>
             <p style="color: magenta;">Who wants a stylus? You have to get 'em and put 'em away, and you lose 'em. Yuck.
                 Nobody wants a stylus.</p>
@@ -124,6 +127,14 @@
         <textarea id="HTMLEditTextarea"></textarea>
         <button id="HTMLEditCloseButton">Cancel</button>
         <button id="HTMLEditSaveButton">Save</button>
+    </div>
+    <div id="WelcomeGuide">
+        <p id="WelcomeGuideText">Welcome to the CSS Filter Tool! Use the controls on the left to apply filters to the
+            preview area.</p>
+        <span>
+            <button id="WelcomeGuideButton">Next</button>
+            <button id="WelcomeCloseButton">No Thanks</button>
+        </span>
     </div>
     <script src="./index.js"></script>
 </body>
