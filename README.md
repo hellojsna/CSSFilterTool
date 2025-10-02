@@ -4,11 +4,15 @@ CSSFilterTool is a playground for experimenting with CSS filters.
 
 Users can apply various CSS filter and backdrop-filter values to various HTML elements and see the results in real-time.
 
+Web font used in this project is [Pretendard GOV](https://github.com/orioncactus/pretendard).
+
 ## Features
 
-- WYSIWYG style playground for CSS filters.
+- WYSIWYG style playground for CSS filters: Real-time preview of filters.
 - Various elements to apply filters to, including images, texts, and overlay elements.
 - Ability to copy the generated CSS just by clicking.
+- Edit the preview elements' HTML by right-clicking (or long-pressing on touch devices).
+- "Feeling Lucky" button to randomly select a filter and value.
 
 ## Technologies Used
 - HTML5
