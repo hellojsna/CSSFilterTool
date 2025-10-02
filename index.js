@@ -345,6 +345,7 @@ function showWelcomeGuide() {
     }
     document.getElementById('WelcomeGuideButton').addEventListener('click', () => {
         step += 1;
+        document.getElementById('WelcomeCloseButton').style.display = 'none';
         if (step >= steps.length) {
             welcomeGuide.style.display = 'none';
         } else {
